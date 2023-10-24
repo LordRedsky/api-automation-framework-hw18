@@ -37,17 +37,17 @@ public class ApiTest {
     }
 
     //Negative Test for GET
-//    @Test
-//    public void getSpecificUserByIDNegative() {
-//        RestAssured.baseURI = "https://reqres.in/";
-//        int idUser = 190;
-//        File jsonSchemaFile = new File("src/test/resources/jsonSchema/getSpecificUserByID.json");
-//
-//        given().when().get("api/users/" + idUser)
-//                .then()
-//                .assertThat().statusCode(200)
-//                .assertThat().body(JsonSchemaValidator.matchesJsonSchema(jsonSchemaFile));
-//    }
+    @Test
+    public void getSpecificUserByIDNegativeTest() {
+        RestAssured.baseURI = "https://reqres.in/";
+        int idUser = 190;
+        File jsonSchemaFile = new File("src/test/resources/jsonSchema/getSpecificUserByID.json");
+
+        given().when().get("api/users/" + idUser)
+                .then()
+                .assertThat().statusCode(200)
+                .assertThat().body(JsonSchemaValidator.matchesJsonSchema(jsonSchemaFile));
+    }
 
     //Positive Test for POST
     @Test
@@ -78,63 +78,63 @@ public class ApiTest {
     }
 
     //Negative Test for POST
-//    @Test
-//    public void createNewUserNegativeTest() {
-//        RestAssured.baseURI = "https://reqres.in/";
-//        String first_name_value = "Lord";
-//        String last_name_value = "Redsky";
-//        String email_value = "redsky@mail.com";
-//
-//        JSONObject inputObj = new JSONObject();
-//        inputObj.put("email", email_value);
-//        inputObj.put("first_name", first_name_value);
-//        inputObj.put("last_name", last_name_value);
-//
-//        given()
-//                .post("api/users")
-//                .then().log().all()
-//                .assertThat().statusCode(201)
-//                .assertThat().body("first_name", Matchers.equalTo(first_name_value))
-//                .assertThat().body("last_name", Matchers.equalTo(last_name_value))
-//                .assertThat().body("email", Matchers.equalTo(email_value))
-//                .assertThat().body("$", Matchers.hasKey("id"))
-//                .assertThat().body("$", Matchers.hasKey("createdAt"));
-//
-//    }
-
-    //Positive Test for PUT
     @Test
-    public void updateNameUserByID() {
+    public void createNewUserNegativeTest() {
         RestAssured.baseURI = "https://reqres.in/";
-        int userID = 2;
-        String nameUpdate = "updatedName";
+        String first_name_value = "Lord";
+        String last_name_value = "Redsky";
+        String email_value = "redsky@mail.com";
 
-        String lname = given().when().get("api/users/" + userID).getBody().jsonPath().get("data.last_name");
-        String email = given().when().get("api/users/" + userID).getBody().jsonPath().get("data.email");
-        String avatar = given().when().get("api/users/" + userID).getBody().jsonPath().get("data.avatar");
-
-        HashMap<String, Object> bodyMap = new HashMap<>();
-        bodyMap.put("id", userID);
-        bodyMap.put("first_name", nameUpdate);
-        bodyMap.put("last_name", lname);
-        bodyMap.put("email", email);
-        bodyMap.put("avatar", avatar);
-
-        JSONObject jsonObject = new JSONObject(bodyMap);
+        JSONObject inputObj = new JSONObject();
+        inputObj.put("email", email_value);
+        inputObj.put("first_name", first_name_value);
+        inputObj.put("last_name", last_name_value);
 
         given()
-                .header("Content-Type","application/json")
-                .body(jsonObject.toString())
-                .put("api/users/" + userID)
-                .then()
-                .log().all()
-                .assertThat().statusCode(200)
-                .assertThat().body("first_name", Matchers.equalTo(nameUpdate));
+                .post("api/users")
+                .then().log().all()
+                .assertThat().statusCode(201)
+                .assertThat().body("first_name", Matchers.equalTo(first_name_value))
+                .assertThat().body("last_name", Matchers.equalTo(last_name_value))
+                .assertThat().body("email", Matchers.equalTo(email_value))
+                .assertThat().body("$", Matchers.hasKey("id"))
+                .assertThat().body("$", Matchers.hasKey("createdAt"));
+
     }
 
-    //Negative Test for PUT
+    //Positive Test for PUT
 //    @Test
-//    public void updateNameUserByIDNegative() {
+//    public void updateNameUserByID() {
+//        RestAssured.baseURI = "https://reqres.in/";
+//        int userID = 2;
+//        String nameUpdate = "updatedName";
+//
+//        String lname = given().when().get("api/users/" + userID).getBody().jsonPath().get("data.last_name");
+//        String email = given().when().get("api/users/" + userID).getBody().jsonPath().get("data.email");
+//        String avatar = given().when().get("api/users/" + userID).getBody().jsonPath().get("data.avatar");
+//
+//        HashMap<String, Object> bodyMap = new HashMap<>();
+//        bodyMap.put("id", userID);
+//        bodyMap.put("first_name", nameUpdate);
+//        bodyMap.put("last_name", lname);
+//        bodyMap.put("email", email);
+//        bodyMap.put("avatar", avatar);
+//
+//        JSONObject jsonObject = new JSONObject(bodyMap);
+//
+//        given()
+//                .header("Content-Type","application/json")
+//                .body(jsonObject.toString())
+//                .put("api/users/" + userID)
+//                .then()
+//                .log().all()
+//                .assertThat().statusCode(200)
+//                .assertThat().body("first_name", Matchers.equalTo(nameUpdate));
+//    }
+//
+//    //Negative Test for PUT
+//    @Test
+//    public void updateNameUserByIDNegativeTest() {
 //        RestAssured.baseURI = "https://reqres.in/";
 //        int userID = 2;
 //        String nameUpdate = "updatedName";
