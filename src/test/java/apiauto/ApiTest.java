@@ -41,12 +41,10 @@ public class ApiTest {
     public void getSpecificUserByIDNegativeTest() {
         RestAssured.baseURI = "https://reqres.in/";
         int idUser = 190;
-        File jsonSchemaFile = new File("src/test/resources/jsonSchema/getSpecificUserByID.json");
 
         given().when().get("api/users/" + idUser)
                 .then()
-                .assertThat().statusCode(200)
-                .assertThat().body(JsonSchemaValidator.matchesJsonSchema(jsonSchemaFile));
+                .assertThat().statusCode(404);
     }
 
     //Positive Test for POST
@@ -81,7 +79,7 @@ public class ApiTest {
     @Test
     public void createNewUserNegativeTest() {
         RestAssured.baseURI = "https://reqres.in/";
-        String first_name_value = "Lord";
+        int first_name_value = 123;
         String last_name_value = "Redsky";
         String email_value = "redsky@mail.com";
 
@@ -93,12 +91,7 @@ public class ApiTest {
         given()
                 .post("api/users")
                 .then().log().all()
-                .assertThat().statusCode(201)
-                .assertThat().body("first_name", Matchers.equalTo(first_name_value))
-                .assertThat().body("last_name", Matchers.equalTo(last_name_value))
-                .assertThat().body("email", Matchers.equalTo(email_value))
-                .assertThat().body("$", Matchers.hasKey("id"))
-                .assertThat().body("$", Matchers.hasKey("createdAt"));
+                .assertThat().statusCode(415);
 
     }
 

@@ -24,4 +24,4 @@ allure serve build/allure-results
 ```
 
 ### Allure Results
-![img_2.png](img_2.png)
+![img_3.png](img_3.png)
